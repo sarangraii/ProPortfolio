@@ -3,7 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sarang Kumar Rai - Elite MERN Stack Developer</title>
+    <title>Sarang Kumar Rai - MERN Stack Developer</title>
+
+    <meta name="description" content="Sarang Kumar Rai — MERN stack developer building full-stack web applications with authentication, payments, and real-time features. View projects, experience, and resume.">
+    <meta name="keywords" content="Sarang Kumar Rai, MERN Stack Developer, Full Stack Developer, React Developer, Node.js Developer, Web Developer Portfolio">
+    <meta name="author" content="Sarang Kumar Rai">
+    <meta name="theme-color" content="#0A0A0A">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sarang Kumar Rai - MERN Stack Developer">
+    <meta property="og:description" content="Full-stack web applications built end to end — authentication, payments, real-time features, and admin tooling.">
+    <meta property="og:image" content="main1.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sarang Kumar Rai - MERN Stack Developer">
+    <meta name="twitter:description" content="Full-stack web applications built end to end — authentication, payments, real-time features, and admin tooling.">
+    <meta name="twitter:image" content="main1.jpg">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230A0A0A'/%3E%3Ctext x='50' y='68' font-size='58' font-family='monospace' font-weight='700' fill='%2300FF88' text-anchor='middle'%3E%3C/%3E%3C/text%3E%3C/svg%3E">
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
@@ -15,6 +32,8 @@
             --secondary: #1A1A1A;
             --accent: #00FF88;
             --accent-dim: #00CC6E;
+            --accent2: #00D4FF;
+            --accent2-glow: rgba(0, 212, 255, 0.15);
             --text-primary: #FFFFFF;
             --text-secondary: #A0A0A0;
             --text-muted: #666666;
@@ -670,9 +689,399 @@
                 flex-direction: column;
             }
         }
+
+        /* ============ ADDED VISUAL EFFECTS (nothing above this line was changed) ============ */
+
+        /* Scroll progress bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+            box-shadow: 0 0 10px var(--accent);
+            z-index: 2000;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Active nav link indicator (works alongside existing hover underline) */
+        .nav-link.active-link {
+            color: var(--accent) !important;
+        }
+        .nav-link.active-link::after {
+            width: 100%;
+        }
+
+        /* Tilt + cursor-spotlight on project cards and profile image */
+        .project-card, .profile-image-container {
+            position: relative;
+        }
+        .project-card::after, .profile-image-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), var(--glow), transparent 65%);
+            transition: opacity 0.35s ease;
+            z-index: 3;
+        }
+        .project-card:hover::after, .profile-image-container:hover::after {
+            opacity: 1;
+        }
+
+        /* Shine sweep across project cards and contact cards on hover */
+        .project-card::before, .contact-card {
+            /* contact-card gets overflow control below without touching its declared rules */
+        }
+        .contact-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .project-card {
+            will-change: transform;
+        }
+        .shine-sweep {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -60%;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.10), transparent);
+            transform: skewX(-20deg);
+            pointer-events: none;
+            z-index: 4;
+            transition: left 0.7s ease;
+        }
+        .project-card:hover .shine-sweep,
+        .contact-card:hover .shine-sweep {
+            left: 130%;
+        }
+
+        /* Animated counters keep numerals from jumping width */
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Magnetic buttons need a smooth settle */
+        .btn-primary-cta, .btn-secondary-cta, .btn-resume {
+            position: relative;
+        }
+
+        /* Ripple effect span spawned on click */
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.55);
+            transform: scale(0);
+            animation: rippleAnim 0.6s ease-out forwards;
+            pointer-events: none;
+            z-index: 5;
+        }
+        @keyframes rippleAnim {
+            to {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Section badge subtle glow pulse for a touch of premium polish */
+        .section-badge {
+            animation: badgeGlow 3.5s ease-in-out infinite;
+        }
+        @keyframes badgeGlow {
+            0%, 100% { box-shadow: 0 0 0 rgba(0,255,136,0); }
+            50% { box-shadow: 0 0 14px rgba(0,255,136,0.18); }
+        }
+
+        /* ============ NEW SECTIONS + FEATURES ============ */
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .loader-mark {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .loader-mark .cursor-blink {
+            width: 9px;
+            height: 1.3rem;
+            background: var(--accent);
+            animation: blinkCursor 0.9s step-end infinite;
+        }
+        @keyframes blinkCursor { 50% { opacity: 0; } }
+
+        /* Scroll cue at bottom of hero */
+        .scroll-cue {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease, color 0.3s ease;
+        }
+        .scroll-cue:hover { opacity: 1; color: var(--accent); }
+        .scroll-cue i {
+            animation: bounceCue 1.8s ease-in-out infinite;
+            font-size: 1.1rem;
+        }
+        @keyframes bounceCue {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+
+        /* Back to top button */
+        #backToTop {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 900;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        #backToTop.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        #backToTop:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--glow);
+            transform: translateY(-3px);
+        }
+
+        /* About section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        @media (max-width: 991.98px) {
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+        .about-text p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 1.25rem;
+            font-size: 1.05rem;
+        }
+        .quick-facts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .quick-fact {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+        .quick-fact-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .quick-fact-value {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        /* Skills section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+        @media (max-width: 767.98px) {
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+        .skill-category {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.75rem;
+            transition: all 0.3s ease;
+        }
+        .skill-category:hover {
+            border-color: var(--accent2);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.08);
+            transform: translateY(-4px);
+        }
+        .skill-category-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--accent2-glow);
+            color: var(--accent2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        .skill-category-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .skill-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            padding: 5px 11px;
+            border-radius: 6px;
+            transition: all 0.25s ease;
+        }
+        .skill-pill:hover {
+            border-color: var(--accent2);
+            color: var(--accent2);
+        }
+
+        /* Education / Certifications section */
+        .edu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        @media (max-width: 767.98px) {
+            .edu-grid { grid-template-columns: 1fr; }
+        }
+        .edu-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--accent2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            transition: all 0.3s ease;
+        }
+        .edu-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        .edu-icon {
+            color: var(--accent2);
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .edu-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+        .edu-meta {
+            color: var(--accent2);
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 0.6rem;
+        }
+        .edu-desc {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        /* Project filter tabs */
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 3rem;
+        }
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .project-hidden {
+            display: none !important;
+        }
+        .project-image-placeholder {
+            width: 100%;
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--accent2);
+            background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(0,255,136,0.05));
+            border-bottom: 1px solid var(--border);
+        }
     </style>
 </head>
 <body>
+    <div id="preloader">
+        <div class="loader-mark">sarang<span class="cursor-blink"></span></div>
+    </div>
+    <div class="scroll-progress" id="scrollProgress"></div>
     <div class="grid-bg"></div>
     <div class="gradient-orb orb-1"></div>
     <div class="gradient-orb orb-2"></div>
@@ -686,6 +1095,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#work">Work</a>
                     </li>
@@ -717,7 +1132,7 @@
                         <!-- <p class="hero-subtitle">Elite MERN Stack Developer & System Architect</p> -->
                          <p class="hero-subtitle">MERN Stack Developer</p>
                         <p class="hero-description">
-                            Specialized in architecting scalable, high-performance web applications with cutting-edge technologies. Transforming complex business requirements into elegant, production-ready solutions with enterprise-grade security and optimization.
+                            Focused on building full-stack web applications end to end — from database design through deployment — with authentication, payments, and real-time features that hold up in production, not just in a demo.
                         </p>
                         <div class="cta-group">
                             <a href="#work" class="btn-primary-cta">
@@ -730,13 +1145,14 @@
                         <div class="tech-stack">
                             <span class="tech-badge">React.js</span>
                             <span class="tech-badge">Node.js</span>
-                            <span class="tech-badge">MongoDB</span>
                             <span class="tech-badge">Express.js</span>
-                            <span class="tech-badge">Javascript</span>
+                            <span class="tech-badge">FastAPI</span>
+                            <span class="tech-badge">MongoDB</span>
                             <span class="tech-badge">REST APIs</span>
                             <span class="tech-badge">JWT Auth</span>
-                            <span class="tech-badge">Git</span>
-                        </div>
+                            <span class="tech-badge">Gemini API</span>
+                            <span class="tech-badge">Stripe</span>
+                        </div>  
                     </div>
                 </div>
                 <div class="col-lg-5 order-1 order-lg-2 mb-5 mb-lg-0">
@@ -762,13 +1178,135 @@
                             <div class="stat-label">Projects Delivered</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Client Satisfaction</div>
+                            <div class="stat-number">Full Stack</div>
+                            <div class="stat-label">Development Focus</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">24/7</div>
-                            <div class="stat-label">Support</div>
+                            <div class="stat-number">Remote</div>
+                            <div class="stat-label">Available for Work</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#about" class="scroll-cue">
+            <span>SCROLL</span>
+            <i class="bi bi-chevron-down"></i>
+        </a>
+    </section>
+
+    <section id="about" class="section" style="background: var(--secondary);">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-badge">About</div>
+                <h2 class="section-title">A bit about me</h2>
+                <p class="section-subtitle">
+                    What I focus on, how I work, and where I'm headed next
+                </p>
+            </div>
+
+            <div class="about-grid fade-in">
+                <div class="about-text">
+                    <p>
+                        I'm a full stack developer with hands-on experience building applications on the MERN stack alongside the Python/FastAPI ecosystem — from a full-time engineering stint at FXIS.ai to internships and self-driven projects before that.
+                    </p>
+                    <p>
+                        My work spans a multi-role healthcare platform, health and fitness tracking, real-time media platforms, and developer tooling — with a focus on responsive frontends, RESTful APIs, secure authentication, and increasingly, integrating LLM-based AI features (Gemini, Groq) and payment flows (Stripe) into full applications.
+                    </p>
+                    <p>
+                        Outside of application development, I built a retrofit pollution-control device that reduced vehicle emissions by up to 90%, shown at an IIT Mumbai zonal-level competition — a reminder that I like solving problems end to end, not just in code.
+                    </p>
+                </div>
+                <div class="quick-facts">
+                    <div class="quick-fact">
+                        <div class="quick-fact-label">Based in</div>
+                        <div class="quick-fact-value">Narsinghpur, India</div>
+                    </div>
+                    <div class="quick-fact">
+                        <div class="quick-fact-label">Most recently at</div>
+                        <div class="quick-fact-value">FXIS.ai</div>
+                    </div>
+                    <div class="quick-fact">
+                        <div class="quick-fact-label">Core stack</div>
+                        <div class="quick-fact-value">React · Node · FastAPI</div>
+                    </div>
+                    <div class="quick-fact">
+                        <div class="quick-fact-label">Open to</div>
+                        <div class="quick-fact-value">Remote & On-site roles</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-badge">Skills</div>
+                <h2 class="section-title">Tools I work with</h2>
+                <p class="section-subtitle">
+                    Grouped by where they sit in the stack
+                </p>
+            </div>
+
+            <div class="skills-grid fade-in">
+                <div class="skill-category">
+                    <div class="skill-category-icon"><i class="bi bi-layout-text-window"></i></div>
+                    <div class="skill-category-title">Frontend</div>
+                    <div class="skill-list">
+                        <span class="skill-pill">HTML</span>
+                        <span class="skill-pill">CSS</span>
+                        <span class="skill-pill">JavaScript</span>
+                        <span class="skill-pill">React.js</span>
+                        <span class="skill-pill">React Router</span>
+                        <span class="skill-pill">Vite</span>
+                        <span class="skill-pill">Bootstrap</span>
+                        <span class="skill-pill">jQuery</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-icon"><i class="bi bi-hdd-network"></i></div>
+                    <div class="skill-category-title">Backend</div>
+                    <div class="skill-list">
+                        <span class="skill-pill">Node.js</span>
+                        <span class="skill-pill">Express.js</span>
+                        <span class="skill-pill">Python</span>
+                        <span class="skill-pill">FastAPI</span>
+                        <span class="skill-pill">SQLAlchemy</span>
+                        <span class="skill-pill">Pydantic</span>
+                        <span class="skill-pill">Uvicorn</span>
+                        <span class="skill-pill">REST APIs</span>
+                        <span class="skill-pill">JWT Auth</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-icon"><i class="bi bi-database"></i></div>
+                    <div class="skill-category-title">Databases</div>
+                    <div class="skill-list">
+                        <span class="skill-pill">MongoDB</span>
+                        <span class="skill-pill">MongoDB Atlas</span>
+                        <span class="skill-pill">MySQL</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-icon"><i class="bi bi-stars"></i></div>
+                    <div class="skill-category-title">AI & Payments</div>
+                    <div class="skill-list">
+                        <span class="skill-pill">Gemini API</span>
+                        <span class="skill-pill">Groq API (LLaMA)</span>
+                        <span class="skill-pill">Stripe</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-icon"><i class="bi bi-tools"></i></div>
+                    <div class="skill-category-title">Tools & Deployment</div>
+                    <div class="skill-list">
+                        <span class="skill-pill">Git</span>
+                        <span class="skill-pill">GitHub</span>
+                        <span class="skill-pill">VS Code</span>
+                        <span class="skill-pill">Vercel</span>
+                        <span class="skill-pill">Render</span>
+                        <span class="skill-pill">Netlify</span>
                     </div>
                 </div>
             </div>
@@ -781,14 +1319,46 @@
                 <div class="section-badge">Portfolio</div>
                 <h2 class="section-title">Featured Projects</h2>
                 <p class="section-subtitle">
-                    Enterprise-level applications showcasing full-stack expertise, scalable architecture, and production-ready code
+                    Full-stack applications built end to end — covering authentication, payments, real-time features, and admin tooling
                 </p>
             </div>
             
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
+            <div class="filter-tabs fade-in">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="Healthcare Platform">Healthcare Platform</button>
+                <button class="filter-btn" data-filter="Health Tech">Health Tech</button>
+                <button class="filter-btn" data-filter="Media Platform">Media Platform</button>
+                <button class="filter-btn" data-filter="Full Stack">Full Stack</button>
+                <button class="filter-btn" data-filter="Social Platform">Social Platform</button>
+                <button class="filter-btn" data-filter="E-Commerce">E-Commerce</button>
+                <button class="filter-btn" data-filter="IoT Solution">IoT Solution</button>
+                <button class="filter-btn" data-filter="Developer Tool">Developer Tool</button>
+                <button class="filter-btn" data-filter="Logistics">Logistics</button>
+            </div>
+
+            <div class="row g-4" id="projectsGrid">
+                <!-- Flagship project — swap the placeholder icon for a real screenshot when ready -->
+                <div class="col-lg-4 col-md-6 project-col" data-category="Healthcare Platform">
+                    <div class="project-card fade-in" style="border-color: var(--accent2);">
+                        <span class="shine-sweep"></span>
+                        <img src="Screenshot 2026-09-05 175214.png" class="project-image" loading="lazy" alt="MediTrack">
+                        <div class="project-content">
+                            <span class="project-tag" style="background: rgba(0,212,255,0.12); color: var(--accent2);">Flagship · Healthcare Platform</span>
+                            <h3 class="project-title">Multi-Role Healthcare Management Platform</h3>
+                            <p class="project-tech">React 18 • FastAPI • MySQL • SQLAlchemy • Gemini API • Stripe</p>
+                            <p class="project-description">
+                                A full-stack, multi-role platform (patient, doctor, pharmacist, lab technician, admin) covering appointment booking, prescription approve/dispense workflows, and lab report uploads. Includes an AI-driven health risk analysis module, a medication adherence tracker, a prescription conflict detector, and a context-aware AI health assistant powered by the Gemini API with Groq/LLaMA as fallback. Real-time notifications run on Server-Sent Events, alongside an admin analytics dashboard and Stripe payments with refunds, cancellations, and printable invoices.
+                            </p>
+                            <a href="https://meditrack-frontend-web.vercel.app/" class="project-link" target="_blank">
+                                View Live <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 project-col" data-category="Full Stack">
                     <div class="project-card fade-in">
-                        <img src="Screenshot 2025-09-10 185454.png" class="project-image" alt="One-Stop Salon">
+                        <span class="shine-sweep"></span>
+                        <img src="Screenshot 2025-09-10 185454.png" class="project-image" alt="One-Stop Salon" loading="lazy">
                         <div class="project-content">
                             <span class="project-tag">Full Stack</span>
                             <h3 class="project-title">One-Stop Salon</h3>
@@ -803,9 +1373,10 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 project-col" data-category="Social Platform">
                     <div class="project-card fade-in">
-                        <img src="Screenshot 2025-09-10 185526.png" class="project-image" alt="Shubh Milan">
+                        <span class="shine-sweep"></span>
+                        <img src="Screenshot 2025-09-10 185526.png" class="project-image" loading="lazy" alt="Shubh Milan">
                         <div class="project-content">
                             <span class="project-tag">Social Platform</span>
                             <h3 class="project-title">Shubh Milan</h3>
@@ -820,9 +1391,10 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 project-col" data-category="E-Commerce">
                     <div class="project-card fade-in">
-                        <img src="Screenshot 2025-10-20 115554.png" class="project-image" alt="E-Store">
+                        <span class="shine-sweep"></span>
+                        <img src="Screenshot 2025-10-20 115554.png" class="project-image" loading="lazy" alt="E-Store">
                         <div class="project-content">
                             <span class="project-tag">E-Commerce</span>
                             <h3 class="project-title">E-Store Platform</h3>
@@ -837,9 +1409,10 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 project-col" data-category="IoT Solution">
                     <div class="project-card fade-in">
-                        <img src="Screenshot 2025-10-19 172413.png" class="project-image" alt="Smart Parking">
+                        <span class="shine-sweep"></span>
+                        <img src="Screenshot 2025-10-19 172413.png" class="project-image" loading="lazy" alt="Smart Parking">
                         <div class="project-content">
                             <span class="project-tag">IoT Solution</span>
                             <h3 class="project-title">Smart Parking</h3>
@@ -854,15 +1427,16 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 project-col" data-category="Developer Tool">
                     <div class="project-card fade-in">
-                        <img src="Screenshot 2025-09-10 185434.png" class="project-image" alt="ApiStudio">
+                        <span class="shine-sweep"></span>
+                        <img src="Screenshot 2025-09-10 185434.png" class="project-image" loading="lazy" alt="ApiStudio">
                         <div class="project-content">
                             <span class="project-tag">Developer Tool</span>
                             <h3 class="project-title">ApiStudio</h3>
                             <p class="project-tech">MERN • API Testing</p>
                             <p class="project-description">
-                                Professional API testing platform with request builders, environment variables, collection management, and response validation tools.
+                                A Postman-style REST API testing tool built with the MERN stack, supporting multiple HTTP methods, custom request headers, and real-time JSON response visualization.
                             </p>
                             <a href="https://api-studio-frontend.vercel.app/" class="project-link" target="_blank">
                                 View Live <i class="bi bi-arrow-right"></i>
@@ -871,9 +1445,10 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 project-col" data-category="Logistics">
                     <div class="project-card fade-in">
-                        <img src="Screenshot 2025-09-11 142027.png" class="project-image" alt="GreenCart">
+                        <span class="shine-sweep"></span>
+                        <img src="Screenshot 2025-09-11 142027.png" class="project-image" loading="lazy" alt="GreenCart">
                         <div class="project-content">
                             <span class="project-tag">Logistics</span>
                             <h3 class="project-title">GreenCart Logistics</h3>
@@ -882,6 +1457,43 @@
                                 Enterprise logistics platform with route optimization, shipment tracking, inventory management, and performance analytics dashboard.
                             </p>
                             <a href="https://green-cart-logistics-frontend-mu.vercel.app/" class="project-link" target="_blank">
+                                View Live <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screenshots can be swapped in later; placeholder icon used for now -->
+                <div class="col-lg-4 col-md-6 project-col" data-category="Health Tech">
+                    <div class="project-card fade-in">
+                        <span class="shine-sweep"></span>
+                        <img src="Screenshot 2026-09-05 175254.png" class="project-image" loading="lazy" alt="HeathTracker">
+                        <div class="project-content">
+                            <span class="project-tag">Health Tech</span>
+                            <h3 class="project-title">HealthFitnessTracker</h3>
+                            <p class="project-tech">React.js • FastAPI • MongoDB • JWT • Recharts</p>
+                            <p class="project-description">
+                                A full-stack health tracking application with JWT-based authentication, meal and workout logging, an AI-based fitness assistant, and personalized diet and workout plans — REST APIs built with FastAPI and MongoDB, and a React.js frontend using Axios and Recharts-based analytics dashboards.
+                            </p>
+                            <a href="https://health-fitness-tracker-cicddocker.vercel.app/" class="project-link" target="_blank">
+                                View Live <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 project-col" data-category="Media Platform">
+                    <div class="project-card fade-in">
+                        <span class="shine-sweep"></span>
+                        <img src="Screenshot 2026-09-05 175232.png" class="project-image" loading="lazy" alt="NewsWebHub">
+                        <div class="project-content">
+                            <span class="project-tag">Media Platform</span>
+                            <h3 class="project-title">NewsWebHub</h3>
+                            <p class="project-tech">React.js • FastAPI • Firebase • Web Speech API</p>
+                            <p class="project-description">
+                                Real-time text-to-speech news summary platform with multi-language support, offline audio playback, and push notifications via Firebase Cloud Messaging with background service workers.
+                            </p>
+                            <a href="https://news-web-hub-cicddocker.vercel.app/" class="project-link" target="_blank">
                                 View Live <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
@@ -908,47 +1520,82 @@
             </div>
             
             <div class="row g-4">
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="experience-card fade-in">
-                        <span class="experience-badge">Current · Full-Time</span>
-                        <h3 class="experience-title">Full Stack Engineer</h3>
-                        <p class="experience-company">FXIS.ai · Remote — May 2026 to Present</p>
+                        <span class="experience-badge">Intern → Full-Time</span>
+                        <h3 class="experience-title">Full Stack Developer</h3>
+                        <p class="experience-company">FXIS.ai · Remote — Dec 2025 to July 2026</p>
                         <p class="experience-description">
-                            Building full-stack applications end to end using the MERN stack and FastAPI (Python), following on from an internship with the same team.
+                            Built and maintained full-stack application features using React.js, FastAPI, and MongoDB as part of the product development team. Implemented RESTful APIs with FastAPI and integrated them with React.js frontends — starting as an intern before transitioning into a full-time role.
                         </p>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="experience-card fade-in">
                         <span class="experience-badge">Internship</span>
-                        <h3 class="experience-title">MERN Stack Engineer</h3>
-                        <p class="experience-company">Ypsilon IT Solutions Pvt. Ltd.</p>
+                        <h3 class="experience-title">MERN Stack Intern</h3>
+                        <p class="experience-company">Ypsilon IT Solutions Pvt. Ltd. · Indore — Oct 2024 to March 2025</p>
                         <p class="experience-description">
-                            Developed production-ready full-stack applications using MERN stack. Implemented RESTful APIs, database optimization, and responsive UI components. Collaborated in agile environment delivering scalable solutions.
+                            Developed application features using MongoDB, Express.js, React.js, and Node.js, gaining practical experience across the full MERN stack.
                         </p>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="experience-card fade-in">
                         <span class="experience-badge">Program</span>
-                        <h3 class="experience-title">Frontend Developer</h3>
-                        <p class="experience-company">IBM Skills Network</p>
+                        <h3 class="experience-title">Frontend Developer Intern</h3>
+                        <p class="experience-company">IBM SkillsBuild CSRBOX Program · Rewa — June 2023 to Aug 2023</p>
                         <p class="experience-description">
-                            Mastered modern frontend technologies including React, responsive design patterns, and performance optimization. Built enterprise-grade interfaces following best practices and accessibility standards.
+                            Built frontend web pages and components using HTML, CSS, and JavaScript.
                         </p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="experience-card fade-in">
-                        <span class="experience-badge">Innovation</span>
-                        <h3 class="experience-title">Innovation Researcher</h3>
-                        <p class="experience-company">IIT Mumbai Competition</p>
-                        <p class="experience-description">
-                            Developed POCON - an emission reduction device achieving 90% efficiency. Showcased technical innovation, problem-solving, and ability to create impactful solutions for environmental challenges.
-                        </p>
+    <section id="education" class="section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-badge">Education</div>
+                <h2 class="section-title">Education, Certifications & Achievements</h2>
+                <p class="section-subtitle">
+                    Formal education alongside hands-on certifications and recognitions
+                </p>
+            </div>
+
+            <div class="edu-grid fade-in">
+                <div class="edu-card">
+                    <div class="edu-icon"><i class="bi bi-mortarboard-fill"></i></div>
+                    <div class="edu-title">Bachelor of Technology in Computer Science</div>
+                    <div class="edu-meta">Rewa Engineering College, RGPV · June 2020 – June 2024</div>
+                    <div class="edu-desc">7.51 CGPA · Rewa, India</div>
+                </div>
+
+                <div class="edu-card">
+                    <div class="edu-icon"><i class="bi bi-book-fill"></i></div>
+                    <div class="edu-title">Higher & Secondary Schooling</div>
+                    <div class="edu-meta">Kendriya Vidyalaya, Narsinghpur · June 2017 – June 2020</div>
+                    <div class="edu-desc">Completed higher secondary and secondary schooling.</div>
+                </div>
+
+                <div class="edu-card">
+                    <div class="edu-icon"><i class="bi bi-lightbulb-fill"></i></div>
+                    <div class="edu-title">Pollution Controller (POCON) Device</div>
+                    <div class="edu-meta">IIT Mumbai Zonal Level Competition</div>
+                    <div class="edu-desc">Built a retrofit device that reduced vehicle emissions by up to 90%, tested for compliance with emission standards and presented at the zonal-level competition.</div>
+                </div>
+
+                <div class="edu-card">
+                    <div class="edu-icon"><i class="bi bi-patch-check-fill"></i></div>
+                    <div class="edu-title">Certifications</div>
+                    <div class="edu-meta">3 completed programs</div>
+                    <div class="skill-list" style="margin-top: 0.75rem;">
+                        <span class="skill-pill">MERN Stack — Universal Informatics</span>
+                        <span class="skill-pill">Frontend Web Dev — IBM SkillsBuild</span>
+                        <span class="skill-pill">Full-Stack, Node.js & Python — Tayana Academy</span>
                     </div>
                 </div>
             </div>
@@ -983,6 +1630,7 @@
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
                     <a href="mailto:sarang2452@gmail.com" class="contact-card fade-in">
+                        <span class="shine-sweep"></span>
                         <div class="contact-icon">
                             <i class="bi bi-envelope-fill"></i>
                         </div>
@@ -996,6 +1644,7 @@
 
                 <div class="col-lg-4 col-md-6">
                     <a href="tel:+917999862117" class="contact-card fade-in">
+                        <span class="shine-sweep"></span>
                         <div class="contact-icon">
                             <i class="bi bi-telephone-fill"></i>
                         </div>
@@ -1009,6 +1658,7 @@
 
                 <div class="col-lg-4 col-md-6">
                     <a href="https://www.linkedin.com/in/sarang-rai-3ab028263" class="contact-card fade-in" target="_blank">
+                        <span class="shine-sweep"></span>
                         <div class="contact-icon">
                             <i class="bi bi-linkedin"></i>
                         </div>
@@ -1022,6 +1672,7 @@
 
                 <div class="col-lg-4 col-md-6">
                     <a href="https://github.com/sarangraii" class="contact-card fade-in" target="_blank">
+                        <span class="shine-sweep"></span>
                         <div class="contact-icon">
                             <i class="bi bi-github"></i>
                         </div>
@@ -1035,6 +1686,7 @@
 
                 <div class="col-lg-4 col-md-6">
                     <a href="https://wa.me/917999862117" class="contact-card fade-in" target="_blank">
+                        <span class="shine-sweep"></span>
                         <div class="contact-icon">
                             <i class="bi bi-whatsapp"></i>
                         </div>
@@ -1046,18 +1698,6 @@
                     </a>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
-                    <a href="https://twitter.com" class="contact-card fade-in" target="_blank">
-                        <div class="contact-icon">
-                            <i class="bi bi-twitter-x"></i>
-                        </div>
-                        <div class="contact-text">
-                            <div class="contact-label">Twitter</div>
-                            <div class="contact-value">Follow updates</div>
-                        </div>
-                        <i class="bi bi-arrow-right" style="color: var(--accent);"></i>
-                    </a>
-                </div>
             </div>
 
             <div class="text-center mt-5 fade-in">
@@ -1073,7 +1713,7 @@
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                     <p style="color: var(--text-secondary); margin: 0;">
-                        © 2025 Sarang Kumar Rai. All rights reserved.
+                        © 2026 Sarang Kumar Rai. All rights reserved.
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
@@ -1084,6 +1724,8 @@
             </div>
         </div>
     </footer>
+
+    <button id="backToTop" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     
@@ -1194,6 +1836,148 @@
             setTimeout(() => {
                 trail.remove();
             }, 500);
+        });
+
+        /* ============ ADDED VISUAL EFFECTS SCRIPT (nothing above this line was changed) ============ */
+
+        // Scroll progress bar
+        const scrollProgress = document.getElementById('scrollProgress');
+        function updateScrollProgress() {
+            const h = document.documentElement;
+            const scrolled = h.scrollTop || document.body.scrollTop;
+            const height = h.scrollHeight - h.clientHeight;
+            scrollProgress.style.width = (height > 0 ? (scrolled / height) * 100 : 0) + '%';
+        }
+        window.addEventListener('scroll', updateScrollProgress, { passive: true });
+        updateScrollProgress();
+
+        // Scrollspy: highlight the nav link matching the section in view
+        const spySections = ['about', 'skills', 'work', 'experience', 'resume', 'contact']
+            .map(id => document.getElementById(id))
+            .filter(Boolean);
+        const spyLinks = document.querySelectorAll('.nav-link[href^="#"]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            spySections.forEach(sec => {
+                if (window.scrollY >= sec.offsetTop - 150) current = sec.id;
+            });
+            spyLinks.forEach(link => {
+                link.classList.toggle('active-link', link.getAttribute('href') === '#' + current);
+            });
+        }, { passive: true });
+
+        // Animated count-up for the stats row, triggered once when it scrolls into view
+        let statsAnimated = false;
+        const statsRow = document.querySelector('.stats');
+        const statNumberEls = document.querySelectorAll('.stat-number');
+        function animateStatNumbers() {
+            if (statsAnimated) return;
+            statsAnimated = true;
+            statNumberEls.forEach(el => {
+                const raw = el.textContent.trim();
+                const match = raw.match(/^(\d+)(.*)$/);
+                if (!match) return; // e.g. "24/7" stays as-is
+                const target = parseInt(match[1], 10);
+                const suffix = match[2];
+                const duration = 1200;
+                const start = performance.now();
+                function step(now) {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    el.textContent = Math.round(eased * target) + suffix;
+                    if (progress < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            });
+        }
+        if (statsRow) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) animateStatNumbers();
+                });
+            }, { threshold: 0.4 });
+            statsObserver.observe(statsRow);
+        }
+
+        // Cursor spotlight + gentle 3D tilt on project cards and the profile image
+        document.querySelectorAll('.project-card, .profile-image-container').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mx', x + 'px');
+                card.style.setProperty('--my', y + 'px');
+                const rotateX = ((y / rect.height) - 0.5) * -6;
+                const rotateY = ((x / rect.width) - 0.5) * 6;
+                const lift = card.classList.contains('project-card') ? 'translateY(-8px)' : '';
+                card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) ${lift}`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // Magnetic pull on call-to-action buttons
+        document.querySelectorAll('.btn-primary-cta, .btn-secondary-cta, .btn-resume').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = (e.clientX - rect.left - rect.width / 2) * 0.25;
+                const y = (e.clientY - rect.top - rect.height / 2) * 0.35;
+                btn.style.transform = `translate(${x}px, ${y}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = '';
+            });
+
+            // Ripple effect on click
+            btn.addEventListener('click', function (e) {
+                const rect = btn.getBoundingClientRect();
+                const ripple = document.createElement('span');
+                const size = Math.max(rect.width, rect.height) * 1.2;
+                ripple.className = 'ripple-effect';
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+                ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+                btn.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 650);
+            });
+        });
+
+        // Preloader — fade out once the page has fully loaded
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                if (preloader) preloader.classList.add('hidden');
+            }, 350);
+        });
+        // Safety net: hide preloader even if 'load' is delayed by slow assets
+        setTimeout(() => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) preloader.classList.add('hidden');
+        }, 2500);
+
+        // Back-to-top button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('show', window.scrollY > 500);
+        }, { passive: true });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Project filter tabs
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCols = document.querySelectorAll('.project-col');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+                projectCols.forEach(col => {
+                    const matches = filter === 'all' || col.getAttribute('data-category') === filter;
+                    col.classList.toggle('project-hidden', !matches);
+                });
+            });
         });
     </script>
 </body>
